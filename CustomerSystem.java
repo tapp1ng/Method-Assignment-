@@ -94,6 +94,7 @@ class CustomerSystem{
       int totalSum = 0;
       int charCount2 = 0;
       int evenDigitNum2 = 0;
+      int reverseDigitCounter = 0;
       //counting characters of the credit card
     
       charCount = creditCard.length();
@@ -118,18 +119,19 @@ class CustomerSystem{
       //finding the odd and even digits in the string
       for (int i = 1; i < charCount; i++) {
         reverseDigit = reverseCC.charAt(i);
+        reverseDigitCounter = reverseDigitCounter + 1;
         //coverting the characters to integers
         reverseDigitNum = reverseDigit - '0';
         
         //adding all the odd digits together
-        if (reverseDigitNum%2 != 0) {
+        if (reverseDigitCounter%2 != 0) {
           oddSum = reverseDigitNum + oddSum;
-
+          
           
         }
         
         //doubling the even digits
-        else if (reverseDigitNum%2 == 0) {
+        else if (reverseDigitCounter%2 == 0) {
           evenProduct = reverseDigitNum*2;
           if (evenProduct > 9 ) {
             //converting the integer to a string
@@ -151,9 +153,10 @@ class CustomerSystem{
       //adding the total even sum
 
       evenSum = evenDigitNum2 + sumEvenDouble;
+      System.out.println(oddSum);
       //adding the total sum
       totalSum = oddSum + evenSum;
-      
+      System.out.println(totalSum);
       //determining if the credit card is valid or not
       if (totalSum%10 != 0) {
         System.out.println("Sorry, this card is invalid");
@@ -172,7 +175,13 @@ class CustomerSystem{
         
     }
     
-    
+    /*
+     * Description: Uses an algorithm to determine whether this credit card number is valid or not 
+     * Author: Vincent Nguyen
+     * @param creditCard - the user's inputted credit card number
+     * @return valid - decides whether the card is valid or not
+     * 
+     */
     
     public static void generateCustomerDataFile(){
     }
