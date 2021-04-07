@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+git fetch origin
+git checkout -b validate-credit-card origin/validate-credit-card
+git merge main
