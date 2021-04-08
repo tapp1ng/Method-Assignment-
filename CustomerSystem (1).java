@@ -5,13 +5,14 @@
 
 import java.util.Scanner;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.FileReader;
+import java.io.BufferedReader;
 
 // More packages may be imported in the space below
 
 class CustomerSystem2{
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) throws IOException{
         // Please do not edit any of these variables
         Scanner reader = new Scanner(System.in);
         String userInput, enterCustomerOption, generateCustomerOption, exitCondition;
@@ -68,7 +69,7 @@ class CustomerSystem2{
     * The method may not nesessarily be a void return type
     * This method may also be broken down further depending on your algorithm
     */
-    public static boolean validatePostalCode(String postalCode) throws FileNotFoundException{ 
+    public static boolean validatePostalCode(String postalCode) throws IOException{ 
       
       boolean valid = false;
       
@@ -77,19 +78,33 @@ class CustomerSystem2{
       String postal = input.nextLine();
       
       postalCode = postal.substring(0,3);
-      FileReader fileName = new FileReader("postal_codes.csv"); //targets the file for opening
+      String fileName = "postal_codes.csv"; //targets the file for opening
+      BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
-      Scanner reader = new Scanner(fileName);
-      String line = reader.nextLine();
-      line = reader.nextLine();     
-      while (line != null) {
-        if (line.contains(postalCode)) {
+      String lineNum = reader.readLine();
+     
+      //while loop to allow for reading the file continously 
+      
+      while (lineNum != null) {
+        if (lineNum.contains(postalCode)) {
             valid = true;
         }
-        line = reader.nextLine();    
+        lineNum = reader.readLine();    
       }
-      System.out.println(line);
+      reader.close();
+      
+      //if statements for valid
+      if(valid == true) {
+        System.out.println("Your postal code is valid");
+      }
+      
+      else if(valid == false) {
+        System.out.println("Your postal code is invalid");
+      }
+      
+      
       return valid;
+
     }
       
     
