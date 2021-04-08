@@ -95,9 +95,10 @@ class CustomerSystem{
       int charCount2 = 0;
       int evenDigitNum2 = 0;
       int reverseDigitCounter = 0;
+      String noSpaceCC = " ";
       //counting characters of the credit card
-    
-      charCount = creditCard.length();
+      noSpaceCC = creditCard.replaceAll("\\s","");
+      charCount = noSpaceCC.length();
       if(charCount < 9) {
         System.out.println("Invalid");
         valid = false;
@@ -108,7 +109,7 @@ class CustomerSystem{
       //reversing the characters of the credit card
       //the for loop starts printing the string at the last character and loops to print the rest of the string
       for (int i  = charCount - 1; i >= 0; i--) { 
-        creditCardChar = creditCard.charAt(i);  
+        creditCardChar = noSpaceCC.charAt(i);  
         reverseCC = reverseCC + creditCardChar;
        
       }
