@@ -4,11 +4,16 @@
 
 
 import java.util.Scanner;
+
+import javax.imageio.IIOException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedWriter;
+import java.io.FileWriter; 
+
 
 // More packages may be imported in the space below
 
@@ -63,58 +68,51 @@ class CustomerSystem2{
     * The method may not nesessarily be a void return type
     * This method may also be broken down further depending on your algorithm
     */
-    public static void enterCustomerInfo() {
-      boolean validity = true;
-        Scanner reader = new Scanner(System.in);
-          System.out.println("Please enter the following information");
-
-      System.out.println("First Name");
-      String firstname = reader.nextLine();
-
-      System.out.println("Last Name");
-      String lastname = reader.nextLine();
-
-      System.out.println("City");
-      String city = reader.nextLine();
-
-      System.out.println("Postal Code");
-      String postalCode = reader.nextLine();
-      int pcum = postalcode.length();
-      while (pcum < 3) 
-
-      validity = validatePostalCode(postalCode); //checks if postal code is valid or not
-      while (validity == false) {
-        System.out.println("Postal Code is invalid");
-        System.out.println("Please retype you postal code");//asks customer to retype postal code if invalid
-      postalCode = reader.nextLine();
-      validity = validatePostalCode(postalCode); //
+    public static void enterCustomerInfo() throws IOException{
+        boolean validity = true;
+          Scanner reader = new Scanner(System.in);
+            System.out.println("Please enter the following information");
+  
+        System.out.println("First Name");
+        String firstname = reader.nextLine();
+  
+        System.out.println("Last Name");
+        String lastname = reader.nextLine();
+  
+        System.out.println("City");
+        String city = reader.nextLine();
+  
+        System.out.println("Postal Code");
+        String postalCode = reader.nextLine();
+        int pcum = postalCode.length();
+        while (pcum < 3) 
+  
+        validity = validatePostalCode(postalCode); //checks if postal code is valid or not
+        while (validity == false) {
+          System.out.println("Postal Code is invalid");
+          System.out.println("Please retype you postal code");//asks customer to retype postal code if invalid
+        postalCode = reader.nextLine();
+        validity = validatePostalCode(postalCode); //
+        }
+        System.out.println("Credit Card number");
+        String creditCard = reader.nextLine(); //enters credit card numbers 
+  
+        int ccum = creditCard.length();
+        while (ccum < 9) {
+            System.out.println("Invalid Credit Card numbers");
+            System.out.println("Please renter Credit Card Numbers");
+        creditCard = reader.nextLine();
+        ccum = creditCard.length();  
+        }
+  
       }
-      System.out.println("Credit Card number");
-      String creditcard = reader.nextLine(); //enters credit card numbers 
-
-      int ccum = creditcard.length();
-      while (ccum < 9) {
-          System.out.println("Invalid Credit Card numbers");
-          System.out.println("Please renter Credit Card Numbers");
-      creditcard = reader.nextLine();
-      ccum = creditcard.length();  
-      }
-
-    }
     
     /*
     * This method may be edited to achieve the task however you like.
     * The method may not nesessarily be a void return type
     * This method may also be broken down further depending on your algorithm
     */
-    public static void enterCustomerInfo() {
-    }
-    /*
-    * This method may be edited to achieve the task however you like.
-    * The method may not nesessarily be a void return type
-    * This method may also be broken down further depending on your algorithm
-    */
-    public static boolean validatePostalCode(String postalCode) throws IOException{ 
+    public static boolean validatePostalCode(String postalCode) throws FileNotFoundException{ 
       
       boolean valid = false;
       
@@ -123,25 +121,24 @@ class CustomerSystem2{
       String postal = input.nextLine();
       
       postalCode = postal.substring(0,3);
-      String fileName = "postal_codes.csv"; //targets the file for opening
-      BufferedReader reader = new BufferedReader(new FileReader(fileName));
+      FileReader fileName = new FileReader("postal_codes.csv"); //targets the file for opening
 
-      String lineNum = reader.readLine();
-     
-      //while loop to allow for reading the file continously 
-      
-      while (lineNum != null) {
-        if (lineNum.contains(postalCode)) {
+      Scanner reader = new Scanner(fileName);
+      String line = reader.nextLine();
+      line = reader.nextLine();     
+      while (line != null) {
+        if (line.contains(postalCode)) {
             valid = true;
         }
-        lineNum = reader.readLine();    
+        line = reader.nextLine();    
       }
-      reader.close();
+      System.out.println(line);
+      return valid;
+    }
+      
     
- public static boolean validateCreditCard(String creditCard){
-    
-    
-      //Variables 
+    public static void validateCreditCard(){
+          //Variables 
       boolean valid = false;
       int charCount = 0;
       String reverseCC = " ";
@@ -235,17 +232,15 @@ class CustomerSystem2{
         System.out.println("Sorry, this card is invalid");
         valid = false;
       }
-      return valid;
+      return;
         
     }
     
     /*
-     * Description: Uses an algorithm to determine whether this credit card number is valid or not 
-     * Author: Vincent Nguyen
-     * @param creditCard - the user's inputted credit card number
-     * @return valid - decides whether the card is valid or not
-     * 
-     */
+    * This method may be edited to achieve the task however you like.
+    * The method may not nesessarily be a void return type
+    * This method may also be broken down further depending on your algorithm
+    */
     public static void generateCustomerDataFile(){
 
       try{
@@ -281,4 +276,3 @@ class CustomerSystem2{
     /*******************************************************************
     *       ADDITIONAL METHODS MAY BE ADDED BELOW IF NECESSARY         *
     *******************************************************************/
-}
