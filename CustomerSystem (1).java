@@ -30,6 +30,7 @@ class CustomerSystem3{
         // More variables for the main may be declared in the space below
 
 
+
         do{
             printMenu();                                    // Printing out the main menu
             userInput = reader.nextLine();                  // User selection from the menu
@@ -247,11 +248,36 @@ class CustomerSystem3{
     * This method may also be broken down further depending on your algorithm
     */
     public static void generateCustomerDataFile(){
+        Scanner reader = new Scanner(System.in);
         try {
             // File name 
             FileWriter myWriter = new FileWriter("CustomerData.txt");
+ 
+
+            System.out.println("Please Enter the following infomation");
+
+            System.out.println("First Name");
+            String firstname = reader.nextLine();
+
+            System.out.println("Last Name");
+            String lastname = reader.nextLine();
+
+            System.out.println("City");
+            String city = reader.nextLine();
+
+            System.out.println("Postal Cdoe");
+            String postalCode = reader.nextLine();
+
+            System.out.println("Credit Card Number");
+            String creditCard = reader.nextLine();
+
             //what goes into the file 
-            myWriter.write("\n" + "firstname"  + "lastname" + "city" + "postalCode" + "creditCard");
+            myWriter.write("\n" + 
+            firstname  + 
+            lastname + 
+            city + 
+            postalCode + 
+            creditCard);
             myWriter.close();
             //if file was succesfully writin
             System.out.println("Successfully wrote to the file.");
