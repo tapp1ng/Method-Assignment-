@@ -13,11 +13,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter; 
+import java.io.BufferedReader;
 
 
 // More packages may be imported in the space below
 
-class CustomerSystem2{
+class CustomerSystem3{
     public static void main(String[] args) throws IOException{
         // Please do not edit any of these variables
         Scanner reader = new Scanner(System.in);
@@ -69,7 +70,8 @@ class CustomerSystem2{
     * This method may also be broken down further depending on your algorithm
     */
     public static void enterCustomerInfo() throws IOException{
-        boolean validity = true;
+        boolean validity = false;
+        boolean creditCardValidity = false;
           Scanner reader = new Scanner(System.in);
             System.out.println("Please enter the following information");
   
@@ -87,8 +89,9 @@ class CustomerSystem2{
         int pcum = postalCode.length();
         while (pcum < 3) 
   
-        validity = validatePostalCode(postalCode); //checks if postal code is valid or not
+        
         while (validity == false) {
+          validity = validatePostalCode(postalCode); //checks if postal code is valid or not
           System.out.println("Postal Code is invalid");
           System.out.println("Please retype you postal code");//asks customer to retype postal code if invalid
         postalCode = reader.nextLine();
@@ -104,7 +107,12 @@ class CustomerSystem2{
         creditCard = reader.nextLine();
         ccum = creditCard.length();  
         }
-  
+        while (creditCardValidity == false)
+          creditCardValidity = validateCreditCard(creditCard);
+          creditCard = reader.nextLine();
+          System.out.println("Credit card is invalid");
+        System.out.println("Please retype your credit card");
+        creditCard = reader.nextLine();
       }
     
     /*
@@ -112,7 +120,7 @@ class CustomerSystem2{
     * The method may not nesessarily be a void return type
     * This method may also be broken down further depending on your algorithm
     */
-    public static boolean validatePostalCode(String postalCode) throws FileNotFoundException{ 
+    public static boolean validatePostalCode(String postalCode) throws IOException{ 
       
       boolean valid = false;
       
@@ -121,23 +129,27 @@ class CustomerSystem2{
       String postal = input.nextLine();
       
       postalCode = postal.substring(0,3);
-      FileReader fileName = new FileReader("postal_codes.csv"); //targets the file for opening
+      String fileName = "postal_codes.csv"; //targets the file for opening
+      BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
-      Scanner reader = new Scanner(fileName);
-      String line = reader.nextLine();
-      line = reader.nextLine();     
-      while (line != null) {
-        if (line.contains(postalCode)) {
+      String lineNum = reader.readLine();
+     
+      //while loop to allow for reading the file continously 
+      
+      while (lineNum != null) {
+        if (lineNum.contains(postalCode)) {
             valid = true;
         }
-        line = reader.nextLine();    
+        lineNum = reader.readLine();    
       }
-      System.out.println(line);
-      return valid;
-    }
+      reader.close();
+     
       
+      return valid;
+
+    }  
     
-    public static boolean validateCreditCard(String creditCard){
+      public static boolean validateCreditCard(String creditCard){
           //Variables 
       boolean valid = false;
       int charCount = 0;
@@ -232,7 +244,7 @@ class CustomerSystem2{
         System.out.println("Sorry, this card is invalid");
         valid = false;
       }
-      return;
+      return valid;
         
     }
     
@@ -244,31 +256,31 @@ class CustomerSystem2{
     public static void generateCustomerDataFile(){
 
       try{
-    	String content = "firstname " + "lastname" + "city" + "postalcode" + "creditcard";
+     String content = "firstname " + "lastname" + "city" + "postalcode" + "creditcard";
 
         //Specify the file name and path here
-    	File file = new File("C://CustomerDataFile.csv");
+     File file = new File("C://CustomerDataFile.csv");
 
-    	/* This logic is to create the file if the
-    	 * file is not already present
-    	 */
-    	if(!file.exists()){
-    	   file.createNewFile();
-    	}
+     /* This logic is to create the file if the
+      * file is not already present
+      */
+     if(!file.exists()){
+        file.createNewFile();
+     }
 
-    	//Here true is to append the content to file
-    	FileWriter fw = new FileWriter(file,true);
-    	//BufferedWriter writer give better performance
-    	BufferedWriter bw = new BufferedWriter(fw);
-    	bw.write(content);
-    	//Closing BufferedWriter Stream
-    	bw.close();
+     //Here true is to append the content to file
+     FileWriter fw = new FileWriter(file,true);
+     //BufferedWriter writer give better performance
+     BufferedWriter bw = new BufferedWriter(fw);
+     bw.write(content);
+     //Closing BufferedWriter Stream
+     bw.close();
 
-	System.out.println("Data transfer successful");
+ System.out.println("Data transfer successful");
 
       }catch(IOException ioe){
          System.out.println("Data Transfer Unsuccessful");
-    	 ioe.printStackTrace(); 
+      ioe.printStackTrace(); 
        }
    
 }
