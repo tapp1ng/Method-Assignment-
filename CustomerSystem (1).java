@@ -13,7 +13,7 @@ import java.io.BufferedWriter;
 // More packages may be imported in the space below
 
 class CustomerSystem2{
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) throws IOException{
         // Please do not edit any of these variables
         Scanner reader = new Scanner(System.in);
         String userInput, enterCustomerOption, generateCustomerOption, exitCondition;
@@ -106,7 +106,7 @@ class CustomerSystem2{
     * The method may not nesessarily be a void return type
     * This method may also be broken down further depending on your algorithm
     */
-    public static boolean validatePostalCode(String postalCode) throws FileNotFoundException{ 
+    public static boolean validatePostalCode(String postalCode) throws IOException{ 
       
       boolean valid = false;
       
@@ -115,29 +115,149 @@ class CustomerSystem2{
       String postal = input.nextLine();
       
       postalCode = postal.substring(0,3);
-      FileReader fileName = new FileReader("postal_codes.csv"); //targets the file for opening
+      String fileName = "postal_codes.csv"; //targets the file for opening
+      BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
-      Scanner reader = new Scanner(fileName);
-      String line = reader.nextLine();
-      line = reader.nextLine();     
-      while (line != null) {
-        if (line.contains(postalCode)) {
+      String lineNum = reader.readLine();
+     
+      //while loop to allow for reading the file continously 
+      
+      while (lineNum != null) {
+        if (lineNum.contains(postalCode)) {
             valid = true;
         }
-        line = reader.nextLine();    
+        lineNum = reader.readLine();    
       }
-      System.out.println(line);
+      reader.close();
+      
+      //if statements for valid
+      if(valid == true) {
+        System.out.println("Your postal code is valid");
+      }
+      
+      else if(valid == false) {
+        System.out.println("Your postal code is invalid");
+      }
+      
+      
       return valid;
+
     }
+    /* Description: Reads through a file that can be used to validate a person's postal code
+     * Author: Vincent Nguyen
+     * @param: String postalCode
+     * @return: boolean valid
+     * */ 
       
     
-    public static void validateCreditCard(){
+ public static boolean validateCreditCard(String creditCard){
+    
+    
+      //Variables 
+      boolean valid = false;
+      int charCount = 0;
+      String reverseCC = " ";
+      char creditCardChar = ' ';
+      char reverseDigit = ' ';
+      int reverseDigitNum = 0;
+      int oddSum = 0;
+      int evenProduct = 0;
+      int sumEvenDouble = 0;
+      char evenDigit = ' ';
+      int evenDigitDouble = 0;
+      int evenDigitNum1 = 0;
+      int evenSum = 0;
+      int totalSum = 0;
+      int charCount2 = 0;
+      int evenDigitNum2 = 0;
+      int reverseDigitCounter = 0;
+      String noSpaceCC = " ";
+      //counting characters of the credit card
+    
+      noSpaceCC = creditCard.replaceAll("\\s","");
+      charCount = noSpaceCC.length();
+      if(charCount < 9) {
+        System.out.println("Invalid");
+        valid = false;
+      }
+    
+      
+      
+      //reversing the characters of the credit card
+      //the for loop starts printing the string at the last character and loops to print the rest of the string
+      for (int i  = charCount - 1; i >= 0; i--) { 
+        creditCardChar = noSpaceCC.charAt(i);  
+        reverseCC = reverseCC + creditCardChar;
+       
+      }
+      
+      //counting the characters of the reverse credit card
+      charCount = reverseCC.length();
+      
+      //finding the odd and even digits in the string
+      for (int i = 1; i < charCount; i++) {
+        reverseDigit = reverseCC.charAt(i);
+        reverseDigitCounter = reverseDigitCounter + 1;
+        //coverting the characters to integers
+        reverseDigitNum = reverseDigit - '0';
+        
+        //adding all the odd digits together
+        if (reverseDigitCounter%2 != 0) {
+          oddSum = reverseDigitNum + oddSum;
+          
+          
+        }
+        
+        //doubling the even digits
+        else if (reverseDigitCounter%2 == 0) {
+          evenProduct = reverseDigitNum*2;
+          if (evenProduct > 9 ) {
+            //converting the integer to a string
+            charCount2 = String.valueOf(evenProduct).length() - 1;
+            for (int j = 0; j <= charCount2; j++) {
+              evenDigit = String.valueOf(evenProduct).charAt(j);
+              //coverting the characters to integers
+              evenDigitNum1 = evenDigit - '0';
+              sumEvenDouble = sumEvenDouble + evenDigitNum1;
+            }
+          }
+        //if the number is not a double digit number
+          else if (evenProduct <= 9) {
+            evenDigitNum2 = evenDigitNum2 + evenProduct;
+            
+          }
+        }
+      }
+      //adding the total even sum
+
+      evenSum = evenDigitNum2 + sumEvenDouble;
+      //adding the total sum
+      totalSum = oddSum + evenSum;
+      //determining if the credit card is valid or not
+      if (totalSum%10 != 0) {
+        System.out.println("Sorry, this card is invalid");
+        valid = false;
+      }
+      else if (totalSum%10 == 0) {
+        System.out.println("Accepted");
+        valid = true;
+      }
+      
+      else if(charCount < 9) {
+        System.out.println("Sorry, this card is invalid");
+        valid = false;
+      }
+      return valid;
+        
     }
+    
     /*
-    * This method may be edited to achieve the task however you like.
-    * The method may not nesessarily be a void return type
-    * This method may also be broken down further depending on your algorithm
-    */
+     * Description: Uses an algorithm to determine whether this credit card number is valid or not 
+     * Author: Vincent Nguyen
+     * @param creditCard - the user's inputted credit card number
+     * @return valid - decides whether the card is valid or not
+     * 
+     */
     public static void generateCustomerDataFile(){
 
       try{
