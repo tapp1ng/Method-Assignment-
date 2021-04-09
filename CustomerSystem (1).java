@@ -137,7 +137,7 @@ class CustomerSystem2{
     }
       
     
-    public static void validateCreditCard(){
+    public static boolean validateCreditCard(String creditCard){
           //Variables 
       boolean valid = false;
       int charCount = 0;
