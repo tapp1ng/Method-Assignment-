@@ -265,19 +265,14 @@ class CustomerSystem3{
             System.out.println("City");
             String city = reader.nextLine();
 
-            System.out.println("Postal Cdoe");
+            System.out.println("Postal Code");
             String postalCode = reader.nextLine();
 
             System.out.println("Credit Card Number");
             String creditCard = reader.nextLine();
 
             //what goes into the file 
-            myWriter.write("\n" + 
-            firstname  + 
-            lastname + 
-            city + 
-            postalCode + 
-            creditCard);
+            myWriter.write("\n" +  firstname  + "\n" + lastname + "\\n\\" + city + "\\n\\" + postalCode + "\\n\\" + creditCard);
             myWriter.close();
             //if file was succesfully writin
             System.out.println("Successfully wrote to the file.");
