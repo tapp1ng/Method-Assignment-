@@ -161,7 +161,7 @@ class CustomerSystem2{
     	//Closing BufferedWriter Stream
     	bw.close();
 
-	System.out.println("Data successfully appended at the end of file");
+	System.out.println("Data transfer successful");
 
       }catch(IOException ioe){
          System.out.println("Data Transfer Unsuccessful");
