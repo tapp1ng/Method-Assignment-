@@ -64,6 +64,7 @@ class CustomerSystem2{
     * This method may also be broken down further depending on your algorithm
     */
     public static void enterCustomerInfo() {
+      boolean validity = true;
         Scanner reader = new Scanner(System.in);
           System.out.println("Please enter the following information");
 
@@ -81,17 +82,17 @@ class CustomerSystem2{
       int pcum = postalcode.length();
       while (pcum < 3) 
 
-      boolean validity = validatePostalCode(String postalCode); //checks if postal code is valid or not
+      validity = validatePostalCode(postalCode); //checks if postal code is valid or not
       while (validity == false) {
         System.out.println("Postal Code is invalid");
-        System.out.println("Please retype you postal code")//asks customer to retype postal code if invalid
+        System.out.println("Please retype you postal code");//asks customer to retype postal code if invalid
       postalCode = reader.nextLine();
-      validity = validatePostalCode(String postalCode); //
+      validity = validatePostalCode(postalCode); //
       }
       System.out.println("Credit Card number");
       String creditcard = reader.nextLine(); //enters credit card numbers 
 
-      int ccum = creditcard lenght();
+      int ccum = creditcard.length();
       while (ccum < 9) {
           System.out.println("Invalid Credit Card numbers");
           System.out.println("Please renter Credit Card Numbers");
@@ -99,7 +100,7 @@ class CustomerSystem2{
       ccum = creditcard.length();  
       }
 
-      }
+    }
     
     /*
     * This method may be edited to achieve the task however you like.
